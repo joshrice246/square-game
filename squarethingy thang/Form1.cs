@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,14 +18,21 @@ namespace squarethingy_thang
         Rectangle player2 = new Rectangle(770, 250, 20, 20);
         Rectangle point = new Rectangle(10, 270, 10, 10);
         Rectangle speedboost = new Rectangle(540, 270, 10, 10);
+        Rectangle hurtbox = new Rectangle(340, 230, 10, 10);
+        Random randgen = new Random();
 
         int player1Score = 0;
         int player2Score = 0;
-
+        int random;
         int player1Speed = 5;
         int player2Speed = 5;
-
+        int p1HP = 3;
+        int p2Hp = 3;
     // 816, 489      screen size
+
+      
+
+
 
         bool wPressed = false;
         bool sPressed = false;
@@ -34,11 +42,14 @@ namespace squarethingy_thang
         bool dPressed = false;
         bool leftPressed = false;
         bool rightPressed = false;
+        bool spawn = false;
+        bool spawn2 = false;
 
         SolidBrush blueBrush = new SolidBrush(Color.Purple);
         SolidBrush whiteBrush = new SolidBrush(Color.White);
         SolidBrush yellowBrush = new SolidBrush(Color.Yellow);
         SolidBrush greenbrush = new SolidBrush(Color.Green);
+        SolidBrush hurt = new SolidBrush(Color.Red);
         Pen playerbrush = new Pen(Color.White, 1);
 
         public Form1()
@@ -56,11 +67,21 @@ namespace squarethingy_thang
             p1ScoreLabel.Text = $"{player1Score}";
             p2ScoreLabel.Text = $"{player2Score}";
 
+            hp1.Text = $"HP = {p2Hp}";
+            hp2.Text = $"HP = {p1HP}";
+
+
+
+
             e.Graphics.FillRectangle(blueBrush, player1);
             e.Graphics.FillRectangle(greenbrush, player2);
             e.Graphics.FillRectangle(whiteBrush, point);
             e.Graphics.FillRectangle(yellowBrush, speedboost);
+            e.Graphics.FillRectangle(hurt, hurtbox);
+
+
         }
+
 
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -127,6 +148,11 @@ namespace squarethingy_thang
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+
+           
+
+
+
             try
             {
                 if (aPressed == true && player1.Y > 0)
@@ -169,6 +195,10 @@ namespace squarethingy_thang
                     player2.Y += player2Speed;
                 }
 
+
+
+
+                //borders
                 if (player1.Height <= 0)
                 {
 
@@ -201,39 +231,122 @@ namespace squarethingy_thang
                 if (player1.IntersectsWith(point))
                 {
                     player1Score += 1;
-                    Random randGen = new Random();
-                    int randomval = randGen.Next(450, 800);
                 }
                 else if (player2.IntersectsWith(point))
                 {
                     player2Score += 1;
-                    Random randGen = new Random();
-                    int randomval = randGen.Next(450, 800);
                 }
 
                 //speedboost interact and move
                 if (player1.IntersectsWith(speedboost))
                 {
                     player1Speed += 2;
-                    Random randGen = new Random();
-                    int randomval = randGen.Next(450, 800);
                 }
                 else if (player2.IntersectsWith(speedboost))
                 {
                     player2Speed += 2;
-                    Random randGen = new Random();
-                    int randomval = randGen.Next(450, 800);
                 }
+
+
+                if (player2.IntersectsWith(hurtbox))
+                {
+                    p2Hp -= 1;
+                }
+                else if (player1.IntersectsWith(hurtbox))
+                {
+                    p1HP -= 1;
+                }
+
+
+                if (player1.IntersectsWith(point))
+                {
+                    point.Y = randgen.Next(this.Height - 100);
+                    point.X = randgen.Next(5, 200);
+                }
+
+                if (player2.IntersectsWith(point))
+                {
+                    point.Y = randgen.Next(this.Height - 100);
+                    point.X = randgen.Next(5, 200);
+                }
+
+                if (player1.IntersectsWith(speedboost))
+                {
+                    speedboost.Y = randgen.Next(this.Height - 100);
+                    speedboost.X = randgen.Next(5, 200);
+                }
+
+                if (player2.IntersectsWith(speedboost))
+                {
+                    speedboost.Y = randgen.Next(this.Height - 100);
+                    speedboost.X = randgen.Next(5, 200);
+                }
+
+                if (player1.IntersectsWith(hurtbox))
+                {
+                   hurtbox.Y = randgen.Next(this.Height - 100);
+                    hurtbox.X = randgen.Next(5, 200);
+                }
+
+                if (player2.IntersectsWith(hurtbox))
+                {
+                    hurtbox.Y = randgen.Next(this.Height - 100);
+                    hurtbox.X = randgen.Next(5, 200);
+                }
+
+               //reset on death
+                if (p1HP == 0)
+                {
+                    player1Speed -= 4;
+                    spawn = true;
+                    hurt1.Enabled = true;
+                }
+                else if (p2Hp == 0)
+                {
+                   player2Speed -= 4;
+                    spawn2 = true;
+                    hurt2.Enabled = true;
+
+                }
+
+                
 
                 //wait 4 seconds -3 
                 if (player1Speed == 7)
-                {
-                    speedtimer2.Enabled = true;
+                { 
+                   speedtimer2.Enabled = true;
                 }
                 else if (player2Speed == 7)
                 {
                     speedtimer.Enabled = true;
+
                 }
+
+                //speed cap
+                if (player1Speed == 9)
+                {
+                    player1Speed -= 2;
+                }
+                else if (player2Speed == 9)
+                {
+                    player2Speed -= 2;
+
+                }
+
+
+                if (player1Score == 5)
+                {
+                    gameover.Text = $"GAME OVER\n player1 wins";
+                }
+                if (player2Score == 5)
+                {
+                    gameover.Text = $"GAME OVER\n player2 wins";
+
+                }
+
+
+
+
 
                 if (player1Score == 5)
                 {
@@ -244,6 +357,8 @@ namespace squarethingy_thang
                 {
                     gameTimer.Stop();
                 }
+
+              
 
                 Refresh();
             }
@@ -267,6 +382,8 @@ namespace squarethingy_thang
             {
 
             }
+            
+           
         }
 
         private void speedtimer2_Tick(object sender, EventArgs e)
@@ -277,6 +394,37 @@ namespace squarethingy_thang
             {
                 player1Speed -= 3;
 
+            }
+            else
+            {
+
+            }
+
+            
+        }
+
+        private void hurt1_Tick(object sender, EventArgs e)
+        {
+            hurt1.Enabled = false;
+            if (spawn == true)
+            {
+                player1Speed += 4;
+                spawn = false;
+            }
+            else
+            {
+
+            }
+        }
+    
+
+        private void hurt2_Tick(object sender, EventArgs e)
+        {
+            hurt2.Enabled = false;
+            if (spawn2 == true)
+            {
+                player2Speed += 4;
+                spawn2 = false;
             }
             else
             {
