@@ -34,9 +34,6 @@ namespace squarethingy_thang
         int p2Hp = 3;
         // 816, 489      screen size
 
-         
-
-
 
         bool wPressed = false;
         bool sPressed = false;
@@ -95,16 +92,6 @@ namespace squarethingy_thang
             hurtbox5 = new Rectangle(l, m, 10, 10);
 
 
-
-
-
-
-
-
-
-
-
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -119,8 +106,6 @@ namespace squarethingy_thang
 
             hp1.Text = $"HP = {p2Hp}";
             hp2.Text = $"HP = {p1HP}";
-
-
 
 
             e.Graphics.FillRectangle(blueBrush, player1);
@@ -203,10 +188,6 @@ namespace squarethingy_thang
         private void gameTimer_Tick(object sender, EventArgs e)
         {
            
-
-
-
-
             try
             {
                 if (aPressed == true && player1.X > 0)
@@ -251,8 +232,6 @@ namespace squarethingy_thang
                 {
                     player2.Y += player2Speed;
                 }
-
-
 
 
                 //borders
@@ -508,8 +487,6 @@ namespace squarethingy_thang
                 }
 
 
-
-              
             }
             catch
             {
