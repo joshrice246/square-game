@@ -40,6 +40,9 @@
             this.gameover = new System.Windows.Forms.Label();
             this.hurt1 = new System.Windows.Forms.Timer(this.components);
             this.hurt2 = new System.Windows.Forms.Timer(this.components);
+            this.screen = new System.Windows.Forms.Timer(this.components);
+            this.speed = new System.Windows.Forms.Timer(this.components);
+            this.text = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // p2ScoreLabel
@@ -103,6 +106,21 @@
             this.hurt2.Interval = 3000;
             this.hurt2.Tick += new System.EventHandler(this.hurt2_Tick);
             // 
+            // screen
+            // 
+            this.screen.Interval = 500;
+            this.screen.Tick += new System.EventHandler(this.screen_Tick);
+            // 
+            // speed
+            // 
+            this.speed.Interval = 500;
+            this.speed.Tick += new System.EventHandler(this.speed_Tick);
+            // 
+            // text
+            // 
+            this.text.Interval = 500;
+            this.text.Tick += new System.EventHandler(this.text_Tick);
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
@@ -113,6 +131,7 @@
             this.Controls.Add(this.hp1);
             this.Controls.Add(this.p2ScoreLabel);
             this.Controls.Add(this.p1ScoreLabel);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -135,6 +154,9 @@
         private System.Windows.Forms.Label gameover;
         private System.Windows.Forms.Timer hurt1;
         private System.Windows.Forms.Timer hurt2;
+        private System.Windows.Forms.Timer screen;
+        private System.Windows.Forms.Timer speed;
+        private System.Windows.Forms.Timer text;
     }
 }
 

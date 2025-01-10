@@ -16,9 +16,13 @@ namespace squarethingy_thang
 
         Rectangle player1 = new Rectangle(770, 280, 20, 20);
         Rectangle player2 = new Rectangle(770, 250, 20, 20);
-        Rectangle point = new Rectangle(10, 270, 10, 10);
-        Rectangle speedboost = new Rectangle(540, 270, 10, 10);
-        Rectangle hurtbox = new Rectangle(340, 230, 10, 10);
+        Rectangle point;
+        Rectangle speedboost;
+        Rectangle hurtbox;
+        Rectangle hurtbox2;
+        Rectangle hurtbox3;
+        Rectangle hurtbox4;
+        Rectangle hurtbox5; 
         Random randgen = new Random();
 
         int player1Score = 0;
@@ -28,9 +32,9 @@ namespace squarethingy_thang
         int player2Speed = 5;
         int p1HP = 3;
         int p2Hp = 3;
-    // 816, 489      screen size
+        // 816, 489      screen size
 
-      
+         
 
 
 
@@ -55,6 +59,52 @@ namespace squarethingy_thang
         public Form1()
         {
             InitializeComponent();
+            int x = randgen.Next(0, this.Width - 20);
+            int y = randgen.Next(0, this.Height - 20);
+
+            int a = randgen.Next(0, this.Width - 20);
+            int b = randgen.Next(0, this.Height - 20);
+
+            int c = randgen.Next(0, this.Width - 20);
+            int d = randgen.Next(0, this.Height - 20);
+
+            int e = randgen.Next(0, this.Width - 20);
+            int f = randgen.Next(0, this.Height - 20);
+
+            int g = randgen.Next(0, this.Width - 20);
+            int h = randgen.Next(0, this.Height - 20);
+
+            int k = randgen.Next(0, this.Width - 20);
+            int j = randgen.Next(0, this.Height - 20);
+
+            int l = randgen.Next(0, this.Width - 20);
+            int m = randgen.Next(0, this.Height - 20);
+
+            speedboost = new Rectangle (x,y,10,10);
+
+           point = new Rectangle(a, b, 10, 10);
+
+            hurtbox = new Rectangle(c, d, 10, 10);
+
+          hurtbox2 = new Rectangle(e, f, 10, 10);
+
+            hurtbox3 = new Rectangle(g, h, 10, 10);
+
+            hurtbox4 = new Rectangle(k, j, 10, 10);
+
+            hurtbox5 = new Rectangle(l, m, 10, 10);
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -78,6 +128,10 @@ namespace squarethingy_thang
             e.Graphics.FillRectangle(whiteBrush, point);
             e.Graphics.FillRectangle(yellowBrush, speedboost);
             e.Graphics.FillRectangle(hurt, hurtbox);
+            e.Graphics.FillRectangle(hurt, hurtbox2);
+            e.Graphics.FillRectangle(hurt, hurtbox3);
+            e.Graphics.FillRectangle(hurt, hurtbox4);
+            e.Graphics.FillRectangle(hurt, hurtbox5);
 
 
         }
@@ -148,14 +202,14 @@ namespace squarethingy_thang
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-
            
+
 
 
 
             try
             {
-                if (aPressed == true && player1.Y > 0)
+                if (aPressed == true && player1.X > 0)
                 {
                     player1.X -= player1Speed;
                 }
@@ -165,7 +219,7 @@ namespace squarethingy_thang
                     player1.Y -= player1Speed;
                 }
 
-                if (dPressed == true && player1.Y > 0)
+                if (dPressed == true && player1.X < this.Width - player1.Width)
                 {
                     player1.X += player1Speed;
                 }
@@ -175,12 +229,15 @@ namespace squarethingy_thang
                     player1.Y += player1Speed;
                 }
 
-                if (leftPressed == true && player2.Y > 0)
+
+
+
+                if (leftPressed == true && player2.X > 0)
                 {
                     player2.X -= player2Speed;
                 }
 
-                if (rightPressed == true && player2.Y > 0)
+                if (rightPressed == true && player2.X < this.Width - player2.Width)
                 {
                     player2.X += player2Speed;
                 }
@@ -257,6 +314,41 @@ namespace squarethingy_thang
                     p1HP -= 1;
                 }
 
+                if (player2.IntersectsWith(hurtbox2))
+                {
+                    p2Hp -= 1;
+                }
+                else if (player1.IntersectsWith(hurtbox2))
+                {
+                    p1HP -= 1;
+                }
+
+                if (player2.IntersectsWith(hurtbox3))
+                {
+                    p2Hp -= 1;
+                }
+                else if (player1.IntersectsWith(hurtbox3))
+                {
+                    p1HP -= 1;
+                }
+
+                if (player2.IntersectsWith(hurtbox4))
+                {
+                    p2Hp -= 1;
+                }
+                else if (player1.IntersectsWith(hurtbox4))
+                {
+                    p1HP -= 1;
+                }
+
+                if (player2.IntersectsWith(hurtbox5))
+                {
+                    p2Hp -= 1;
+                }
+                else if (player1.IntersectsWith(hurtbox5))
+                {
+                    p1HP -= 1;
+                }
 
                 if (player1.IntersectsWith(point))
                 {
@@ -284,7 +376,7 @@ namespace squarethingy_thang
 
                 if (player1.IntersectsWith(hurtbox))
                 {
-                   hurtbox.Y = randgen.Next(this.Height - 100);
+                    hurtbox.Y = randgen.Next(this.Height - 100);
                     hurtbox.X = randgen.Next(5, 200);
                 }
 
@@ -294,31 +386,88 @@ namespace squarethingy_thang
                     hurtbox.X = randgen.Next(5, 200);
                 }
 
-               //reset on death
-                if (p1HP == 0)
+
+                if (player1.IntersectsWith(hurtbox2))
                 {
-                    player1Speed -= 4;
+                    hurtbox2.Y = randgen.Next(this.Height - 100);
+                    hurtbox2.X = randgen.Next(5, 200);
+                }
+
+                if (player2.IntersectsWith(hurtbox2))
+                {
+                    hurtbox2.Y = randgen.Next(this.Height - 100);
+                    hurtbox2.X = randgen.Next(5, 200);
+                }
+
+
+                if (player1.IntersectsWith(hurtbox3))
+                {
+                    hurtbox3.Y = randgen.Next(this.Height - 100);
+                    hurtbox3.X = randgen.Next(5, 200);
+                }
+
+                if (player2.IntersectsWith(hurtbox3))
+                {
+                    hurtbox3.Y = randgen.Next(this.Height - 100);
+                    hurtbox3.X = randgen.Next(5, 200);
+                }
+
+
+                if (player1.IntersectsWith(hurtbox4))
+                {
+                    hurtbox4.Y = randgen.Next(this.Height - 100);
+                    hurtbox4.X = randgen.Next(5, 200);
+                }
+
+                if (player2.IntersectsWith(hurtbox4))
+                {
+                    hurtbox4.Y = randgen.Next(this.Height - 100);
+                    hurtbox4.X = randgen.Next(5, 200);
+                }
+
+
+
+                if (player1.IntersectsWith(hurtbox5))
+                {
+                    hurtbox5.Y = randgen.Next(this.Height - 100);
+                    hurtbox5.X = randgen.Next(5, 200);
+                }
+
+                if (player2.IntersectsWith(hurtbox5))
+                {
+                    hurtbox5.Y = randgen.Next(this.Height - 100);
+                    hurtbox5.X = randgen.Next(5, 200);
+                }
+
+                //reset on death
+                if (p1HP == 0 && spawn == false)
+                {
+                    player1Speed = 1;
                     spawn = true;
                     hurt1.Enabled = true;
+                    screen.Enabled = true;
                 }
-                else if (p2Hp == 0)
+                else if (p2Hp == 0 && spawn == false)
                 {
-                   player2Speed -= 4;
+                    player2Speed = 1;
                     spawn2 = true;
                     hurt2.Enabled = true;
+                    screen.Enabled = true;
 
                 }
 
-                
+
 
                 //wait 4 seconds -3 
                 if (player1Speed == 7)
-                { 
-                   speedtimer2.Enabled = true;
+                {
+                    speedtimer2.Enabled = true;
+                    speed.Enabled = true;
                 }
                 else if (player2Speed == 7)
                 {
                     speedtimer.Enabled = true;
+                    speed.Enabled = true;
 
                 }
 
@@ -358,16 +507,18 @@ namespace squarethingy_thang
                     gameTimer.Stop();
                 }
 
-              
 
-                Refresh();
+
+              
             }
             catch
             {
                 p1ScoreLabel.Text = $"ERROR2";
                 p2ScoreLabel.Text = $"ERROR2";
             }
-}
+            Refresh();
+        }
+    
 
         private void speedtimer_Tick(object sender, EventArgs e)
         {
@@ -408,6 +559,7 @@ namespace squarethingy_thang
             hurt1.Enabled = false;
             if (spawn == true)
             {
+                p1HP += 3;
                 player1Speed += 4;
                 spawn = false;
             }
@@ -423,6 +575,7 @@ namespace squarethingy_thang
             hurt2.Enabled = false;
             if (spawn2 == true)
             {
+                p2Hp += 3;
                 player2Speed += 4;
                 spawn2 = false;
             }
@@ -430,6 +583,26 @@ namespace squarethingy_thang
             {
 
             }
+        }
+
+        private void screen_Tick(object sender, EventArgs e)
+        {
+            screen.Enabled = false;
+            gameover.Text = $"SLOW DOWN";
+            text.Enabled = true;
+        }
+
+        private void speed_Tick(object sender, EventArgs e)
+        {
+            speed.Enabled = false;
+            gameover.Text = $"SPEED BUFFED";
+            text.Enabled = true;
+        }
+
+        private void text_Tick(object sender, EventArgs e)
+        {
+            text.Enabled = false;
+            gameover.Text = $"";
         }
     }
     }
